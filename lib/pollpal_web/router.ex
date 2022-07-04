@@ -7,6 +7,8 @@ defmodule PollpalWeb.Router do
 
   scope "/api", PollpalWeb do
     pipe_through :api
+
+		resources "/questions", QuestionController
   end
 
   # Enables LiveDashboard only for development
