@@ -4,8 +4,8 @@ defmodule Pollpal.Polls.Question do
 
   schema "questions" do
     field :description, :string
-    field :ip_duplication, :boolean, default: false
-    field :mode, Ecto.Enum, values: [:multiple, :exclusive]
+    field :ip_duplication_check, :boolean, default: false
+    field :mode, Ecto.Enum, values: [:multiple, :exclusive], default: :exclusive
     field :title, :string
 
 		has_many :question_options, Pollpal.Polls.QuestionOption
@@ -16,7 +16,8 @@ defmodule Pollpal.Polls.Question do
   @doc false
   def changeset(question, attrs) do
     question
-    |> cast(attrs, [:title, :description, :mode, :ip_duplication])
-    |> validate_required([:title, :description, :mode, :ip_duplication])
+    |> cast(attrs, [:title, :description, :mode, :ip_duplication_check])
+    |> validate_required([:title, :question_options])
+		|> cast_assoc(:question_options, with: &Pollpal.Polls.QuestionOption.changeset/2)
   end
 end

@@ -16,7 +16,11 @@ defmodule PollpalWeb.QuestionView do
       title: question.title,
       description: question.description,
       mode: question.mode,
-      ip_duplication: question.ip_duplication
+      ip_duplication_check: question.ip_duplication_check
     }
   end
+
+	def render("question_options.json", %{question: question}) do
+		%{data: Enum.map(question.question_options, fn qo -> %{value: qo.value, index: qo.index} end)}
+	end
 end

@@ -5,9 +5,8 @@ defmodule Pollpal.Polls.QuestionOption do
   schema "question_options" do
     field :index, :integer
     field :value, :string
-    field :question_id, :id
 
-		belongs_to :questions, Pollpal.Polls.Question
+		belongs_to :question, Pollpal.Polls.Question
 
     timestamps()
   end
