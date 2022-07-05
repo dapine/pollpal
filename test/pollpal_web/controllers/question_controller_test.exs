@@ -76,6 +76,14 @@ defmodule PollpalWeb.QuestionControllerTest do
     end
   end
 
+  describe "get question options" do
+    test "renders question options when exists", %{conn: conn} do
+			%Pollpal.Polls.Question{:question_options => _question_options, :id => id} = question_fixture_with_options()
+			conn = get(conn, Routes.question_path(conn, :get_question_options, id))
+			assert _question_options = json_response(conn, 200)["data"]
+		end
+	end
+
   describe "delete question" do
     setup [:create_question]
 

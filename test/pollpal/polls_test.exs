@@ -20,6 +20,11 @@ defmodule Pollpal.PollsTest do
       assert Polls.get_question!(question.id) == question
     end
 
+    test "get_question_with_options/1 returns the question and associated question options with given id" do
+      question = question_fixture_with_options()
+      assert Polls.get_question_with_options(question.id) == question
+    end
+
     test "create_question/1 with valid data creates a question" do
       valid_attrs = %{description: "some description", ip_duplication_check: true, mode: :multiple, title: "some title"}
 
