@@ -6,7 +6,7 @@ defmodule Pollpal.Polls.QuestionOption do
     field :index, :integer
     field :value, :string
 
-		belongs_to :question, Pollpal.Polls.Question
+    belongs_to :question, Pollpal.Polls.Question
 
     timestamps()
   end

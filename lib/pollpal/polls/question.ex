@@ -8,7 +8,7 @@ defmodule Pollpal.Polls.Question do
     field :mode, Ecto.Enum, values: [:multiple, :exclusive], default: :exclusive
     field :title, :string
 
-		has_many :question_options, Pollpal.Polls.QuestionOption
+    has_many :question_options, Pollpal.Polls.QuestionOption
 
     timestamps()
   end
@@ -18,6 +18,9 @@ defmodule Pollpal.Polls.Question do
     question
     |> cast(attrs, [:title, :description, :mode, :ip_duplication_check])
     |> validate_required([:title])
-		|> cast_assoc(:question_options, with: &Pollpal.Polls.QuestionOption.changeset/2, required: false)
+    |> cast_assoc(:question_options,
+      with: &Pollpal.Polls.QuestionOption.changeset/2,
+      required: false
+    )
   end
 end

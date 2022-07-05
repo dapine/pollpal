@@ -37,7 +37,8 @@ defmodule Pollpal.Polls do
   """
   def get_question!(id), do: Repo.get!(Question, id)
 
-	def get_question_with_options(id), do: Repo.get!(Question, id) |> Repo.preload(:question_options)
+  def get_question_with_options(id),
+    do: Repo.get!(Question, id) |> Repo.preload(:question_options)
 
   @doc """
   Creates a question.

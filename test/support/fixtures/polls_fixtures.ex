@@ -35,15 +35,20 @@ defmodule Pollpal.PollsFixtures do
       })
       |> Pollpal.Polls.create_question()
 
-		qo1 = Ecto.build_assoc(question, :question_options, %{
-						index: 1,
-						value: "option 1"})
-		qo2 = Ecto.build_assoc(question, :question_options, %{
-						index: 2,
-						value: "option 2"})
+    qo1 =
+      Ecto.build_assoc(question, :question_options, %{
+        index: 1,
+        value: "option 1"
+      })
 
-		Pollpal.Repo.insert!(qo1)
-		Pollpal.Repo.insert!(qo2)
+    qo2 =
+      Ecto.build_assoc(question, :question_options, %{
+        index: 2,
+        value: "option 2"
+      })
+
+    Pollpal.Repo.insert!(qo1)
+    Pollpal.Repo.insert!(qo2)
 
     question |> Pollpal.Repo.preload(:question_options)
   end

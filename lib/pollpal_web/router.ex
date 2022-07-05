@@ -8,8 +8,8 @@ defmodule PollpalWeb.Router do
   scope "/api", PollpalWeb do
     pipe_through :api
 
-		resources "/questions", QuestionController
-		get "/questions/:id/options", QuestionController, :get_question_options
+    resources "/questions", QuestionController
+    get "/questions/:id/options", QuestionController, :get_question_options
   end
 
   if Mix.env() in [:dev, :test] do

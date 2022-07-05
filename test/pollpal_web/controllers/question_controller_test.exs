@@ -55,7 +55,10 @@ defmodule PollpalWeb.QuestionControllerTest do
   describe "update question" do
     setup [:create_question]
 
-    test "renders question when data is valid", %{conn: conn, question: %Question{id: id} = question} do
+    test "renders question when data is valid", %{
+      conn: conn,
+      question: %Question{id: id} = question
+    } do
       conn = put(conn, Routes.question_path(conn, :update, question), question: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
@@ -78,11 +81,13 @@ defmodule PollpalWeb.QuestionControllerTest do
 
   describe "get question options" do
     test "renders question options when exists", %{conn: conn} do
-			%Pollpal.Polls.Question{:question_options => _question_options, :id => id} = question_fixture_with_options()
-			conn = get(conn, Routes.question_path(conn, :get_question_options, id))
-			assert _question_options = json_response(conn, 200)["data"]
-		end
-	end
+      %Pollpal.Polls.Question{:question_options => _question_options, :id => id} =
+        question_fixture_with_options()
+
+      conn = get(conn, Routes.question_path(conn, :get_question_options, id))
+      assert _question_options = json_response(conn, 200)["data"]
+    end
+  end
 
   describe "delete question" do
     setup [:create_question]
@@ -91,9 +96,9 @@ defmodule PollpalWeb.QuestionControllerTest do
       conn = delete(conn, Routes.question_path(conn, :delete, question))
       assert response(conn, 204)
 
-      assert_error_sent 404, fn ->
+      assert_error_sent(404, fn ->
         get(conn, Routes.question_path(conn, :show, question))
-      end
+      end)
     end
   end
 

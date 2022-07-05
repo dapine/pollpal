@@ -26,7 +26,12 @@ defmodule Pollpal.PollsTest do
     end
 
     test "create_question/1 with valid data creates a question" do
-      valid_attrs = %{description: "some description", ip_duplication_check: true, mode: :multiple, title: "some title"}
+      valid_attrs = %{
+        description: "some description",
+        ip_duplication_check: true,
+        mode: :multiple,
+        title: "some title"
+      }
 
       assert {:ok, %Question{} = question} = Polls.create_question(valid_attrs)
       assert question.description == "some description"
@@ -41,7 +46,13 @@ defmodule Pollpal.PollsTest do
 
     test "update_question/2 with valid data updates the question" do
       question = question_fixture()
-      update_attrs = %{description: "some updated description", ip_duplication_check: false, mode: :exclusive, title: "some updated title"}
+
+      update_attrs = %{
+        description: "some updated description",
+        ip_duplication_check: false,
+        mode: :exclusive,
+        title: "some updated title"
+      }
 
       assert {:ok, %Question{} = question} = Polls.update_question(question, update_attrs)
       assert question.description == "some updated description"
