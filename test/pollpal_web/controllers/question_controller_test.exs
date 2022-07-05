@@ -7,17 +7,17 @@ defmodule PollpalWeb.QuestionControllerTest do
 
   @create_attrs %{
     description: "some description",
-    ip_duplication: true,
+    ip_duplication_check: true,
     mode: :multiple,
     title: "some title"
   }
   @update_attrs %{
     description: "some updated description",
-    ip_duplication: false,
+    ip_duplication_check: false,
     mode: :exclusive,
     title: "some updated title"
   }
-  @invalid_attrs %{description: nil, ip_duplication: nil, mode: nil, title: nil}
+  @invalid_attrs %{description: nil, ip_duplication_check: nil, mode: nil, title: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -40,7 +40,7 @@ defmodule PollpalWeb.QuestionControllerTest do
       assert %{
                "id" => ^id,
                "description" => "some description",
-               "ip_duplication" => true,
+               "ip_duplication_check" => true,
                "mode" => "multiple",
                "title" => "some title"
              } = json_response(conn, 200)["data"]
@@ -64,7 +64,7 @@ defmodule PollpalWeb.QuestionControllerTest do
       assert %{
                "id" => ^id,
                "description" => "some updated description",
-               "ip_duplication" => false,
+               "ip_duplication_check" => false,
                "mode" => "exclusive",
                "title" => "some updated title"
              } = json_response(conn, 200)["data"]

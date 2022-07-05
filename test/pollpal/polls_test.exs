@@ -8,7 +8,7 @@ defmodule Pollpal.PollsTest do
 
     import Pollpal.PollsFixtures
 
-    @invalid_attrs %{description: nil, ip_duplication: nil, mode: nil, title: nil}
+    @invalid_attrs %{description: nil, ip_duplication_check: nil, mode: nil, title: nil}
 
     test "list_questions/0 returns all questions" do
       question = question_fixture()
@@ -21,11 +21,11 @@ defmodule Pollpal.PollsTest do
     end
 
     test "create_question/1 with valid data creates a question" do
-      valid_attrs = %{description: "some description", ip_duplication: true, mode: :multiple, title: "some title"}
+      valid_attrs = %{description: "some description", ip_duplication_check: true, mode: :multiple, title: "some title"}
 
       assert {:ok, %Question{} = question} = Polls.create_question(valid_attrs)
       assert question.description == "some description"
-      assert question.ip_duplication == true
+      assert question.ip_duplication_check == true
       assert question.mode == :multiple
       assert question.title == "some title"
     end
@@ -36,11 +36,11 @@ defmodule Pollpal.PollsTest do
 
     test "update_question/2 with valid data updates the question" do
       question = question_fixture()
-      update_attrs = %{description: "some updated description", ip_duplication: false, mode: :exclusive, title: "some updated title"}
+      update_attrs = %{description: "some updated description", ip_duplication_check: false, mode: :exclusive, title: "some updated title"}
 
       assert {:ok, %Question{} = question} = Polls.update_question(question, update_attrs)
       assert question.description == "some updated description"
-      assert question.ip_duplication == false
+      assert question.ip_duplication_check == false
       assert question.mode == :exclusive
       assert question.title == "some updated title"
     end

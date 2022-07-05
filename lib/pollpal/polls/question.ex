@@ -17,7 +17,7 @@ defmodule Pollpal.Polls.Question do
   def changeset(question, attrs) do
     question
     |> cast(attrs, [:title, :description, :mode, :ip_duplication_check])
-    |> validate_required([:title, :question_options])
-		|> cast_assoc(:question_options, with: &Pollpal.Polls.QuestionOption.changeset/2)
+    |> validate_required([:title])
+		|> cast_assoc(:question_options, with: &Pollpal.Polls.QuestionOption.changeset/2, required: false)
   end
 end
