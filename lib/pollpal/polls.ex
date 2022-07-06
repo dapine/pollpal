@@ -7,6 +7,7 @@ defmodule Pollpal.Polls do
   alias Pollpal.Repo
 
   alias Pollpal.Polls.Question
+  alias Pollpal.Polls.QuestionOption
 
   @doc """
   Returns the list of questions.
@@ -39,6 +40,24 @@ defmodule Pollpal.Polls do
 
   def get_question_with_options(id),
     do: Repo.get!(Question, id) |> Repo.preload(:question_options)
+
+  def get_question_option(id_question, question_option_index) do
+    query =
+      from qo in QuestionOption,
+        where: qo.index == ^question_option_index and qo.question_id == ^id_question
+
+    Repo.all(query)
+  end
+
+  def create_question_option!(id, attrs \\ %{}) do
+    question = get_question!(id)
+
+    %QuestionOption{question: question}
+    |> QuestionOption.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def get_question_option!(id), do: Repo.get!(QuestionOption, id)
 
   @doc """
   Creates a question.

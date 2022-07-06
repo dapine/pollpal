@@ -3,6 +3,7 @@ defmodule PollpalWeb.QuestionController do
 
   alias Pollpal.Polls
   alias Pollpal.Polls.Question
+  alias Pollpal.Polls.QuestionOption
 
   action_fallback PollpalWeb.FallbackController
 
@@ -43,6 +44,32 @@ defmodule PollpalWeb.QuestionController do
 
   def get_question_options(conn, %{"id" => id}) do
     question = Polls.get_question_with_options(id)
-    render(conn, "question_options.json", question: question)
+    render(conn, "question_options.json", question_options: question.question_options)
+  end
+
+  def show_question_option(conn, %{"id" => id}) do
+    qo = Polls.get_question_option!(id)
+    render(conn, "question_option.json", question_option: qo)
+  end
+
+  def get_question_option(conn, %{
+        "id_question" => id_question,
+        "question_option_index" => question_option_index
+      }) do
+    question_options = Polls.get_question_option(id_question, question_option_index)
+    render(conn, "question_options.json", question_options: question_options)
+  end
+
+  def create_question_options(conn, %{"id" => id, "question_option" => question_option_params}) do
+    with {:ok, %QuestionOption{} = question_options} <-
+           Polls.create_question_option!(id, question_option_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header(
+        "location",
+        Routes.question_path(conn, :show_question_option, question_options.id)
+      )
+      |> render("question_options.json", question_options: [question_options])
+    end
   end
 end
