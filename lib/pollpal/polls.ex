@@ -46,7 +46,7 @@ defmodule Pollpal.Polls do
       from qo in QuestionOption,
         where: qo.index == ^question_option_index and qo.question_id == ^id_question
 
-    Repo.all(query)
+    Repo.one(query)
   end
 
   def create_question_option!(id, attrs \\ %{}) do

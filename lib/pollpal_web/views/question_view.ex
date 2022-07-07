@@ -26,8 +26,10 @@ defmodule PollpalWeb.QuestionView do
 
   def render("question_option.json", %{question_option: question_option}) do
     %{
-      index: question_option.index,
-      value: question_option.value
+      data: %{
+        index: question_option.index,
+        value: question_option.value
+      }
     }
   end
 end

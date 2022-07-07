@@ -16,5 +16,6 @@ defmodule Pollpal.Polls.QuestionOption do
     question_option
     |> cast(attrs, [:value, :index])
     |> validate_required([:value, :index])
+    |> unique_constraint([:index, :question])
   end
 end

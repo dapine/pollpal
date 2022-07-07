@@ -56,8 +56,8 @@ defmodule PollpalWeb.QuestionController do
         "id_question" => id_question,
         "question_option_index" => question_option_index
       }) do
-    question_options = Polls.get_question_option(id_question, question_option_index)
-    render(conn, "question_options.json", question_options: question_options)
+    question_option = Polls.get_question_option(id_question, question_option_index)
+    render(conn, "question_option.json", question_option: question_option)
   end
 
   def create_question_options(conn, %{"id" => id, "question_option" => question_option_params}) do
