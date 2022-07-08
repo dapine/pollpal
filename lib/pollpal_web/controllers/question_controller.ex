@@ -4,6 +4,7 @@ defmodule PollpalWeb.QuestionController do
   alias Pollpal.Polls
   alias Pollpal.Polls.Question
   alias Pollpal.Polls.QuestionOption
+  alias Pollpal.Polls.Vote
 
   action_fallback PollpalWeb.FallbackController
 
@@ -70,6 +71,17 @@ defmodule PollpalWeb.QuestionController do
         Routes.question_path(conn, :show_question_option, question_options.id)
       )
       |> render("question_options.json", question_options: [question_options])
+    end
+  end
+
+  def vote(conn, %{
+        "id_question" => id_question,
+        "question_option_index" => question_option_index
+      }) do
+    with {:ok, %Vote{} = vote} <- Polls.create_vote(id_question, question_option_index) do
+      conn
+      |> put_status(:created)
+      |> render("vote.json", vote: vote)
     end
   end
 end

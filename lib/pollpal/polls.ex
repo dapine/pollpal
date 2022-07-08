@@ -8,6 +8,7 @@ defmodule Pollpal.Polls do
 
   alias Pollpal.Polls.Question
   alias Pollpal.Polls.QuestionOption
+  alias Pollpal.Polls.Vote
 
   @doc """
   Returns the list of questions.
@@ -58,6 +59,14 @@ defmodule Pollpal.Polls do
   end
 
   def get_question_option!(id), do: Repo.get!(QuestionOption, id)
+
+  def create_vote(id_question, question_option_index) do
+    question = get_question!(id_question)
+    question_option = get_question_option(question.id, question_option_index)
+
+    %Vote{question_id: question.id, question_option_id: question_option.id}
+    |> Repo.insert()
+  end
 
   @doc """
   Creates a question.

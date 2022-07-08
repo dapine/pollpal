@@ -32,4 +32,13 @@ defmodule PollpalWeb.QuestionView do
       }
     }
   end
+
+  def render("vote.json", %{vote: vote}) do
+    %{
+      data: %{
+        question: vote.question_id,
+        question_option: vote.question_option_id
+      }
+    }
+  end
 end
