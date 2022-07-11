@@ -69,6 +69,15 @@ defmodule Pollpal.Polls do
     |> Repo.insert()
   end
 
+  def get_vote_from_ip(question_id, remote_ip) do
+    query =
+      from v in Vote,
+        where: v.remote_ip_address == ^remote_ip and v.question_id == ^question_id,
+        select: v.id
+
+    Repo.all(query)
+  end
+
   @doc """
   Creates a question.
 

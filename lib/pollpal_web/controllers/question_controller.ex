@@ -74,22 +74,37 @@ defmodule PollpalWeb.QuestionController do
     end
   end
 
+  defp has_voted?(question_id, remote_ip) do
+    Polls.get_vote_from_ip(question_id, remote_ip) |> Enum.count() > 0
+  end
+
+  defp ip_as_string(ip_address) do
+    ip_address
+    |> Tuple.to_list()
+    |> Enum.join(".")
+  end
+
   def vote(conn, %{
         "id_question" => id_question,
         "question_option_index" => question_option_index
       }) do
-    remote_ip =
-      conn.remote_ip
-      |> Tuple.to_list()
-      |> Enum.join(".")
+    remote_ip = ip_as_string(conn.remote_ip)
+    question = Polls.get_question!(id_question)
+    has_voted = has_voted?(id_question, remote_ip)
 
-    with {:ok, %Vote{} = vote} <-
-           Polls.create_vote(id_question, question_option_index, %{
-             remote_ip_address: remote_ip
-           }) do
-      conn
-      |> put_status(:created)
-      |> render("vote.json", vote: vote)
+    case {question.ip_duplication_check, has_voted} do
+      {true, true} ->
+        raise Pollpal.Exceptions.Forbidden, message: "You already voted. Cannot vote again"
+
+      _ ->
+        with {:ok, %Vote{} = vote} <-
+               Polls.create_vote(id_question, question_option_index, %{
+                 remote_ip_address: remote_ip
+               }) do
+          conn
+          |> put_status(:created)
+          |> render("vote.json", vote: vote)
+        end
     end
   end
 end
