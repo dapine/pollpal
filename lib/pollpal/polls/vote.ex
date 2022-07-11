@@ -5,6 +5,7 @@ defmodule Pollpal.Polls.Vote do
   schema "votes" do
     field :question_id, :id
     field :question_option_id, :id
+    field :remote_ip_address, :string
 
     belongs_to :questions, Pollpal.Polls.Question, primary_key: true
     belongs_to :question_options, Pollpal.Polls.QuestionOption, primary_key: true
@@ -15,7 +16,7 @@ defmodule Pollpal.Polls.Vote do
   @doc false
   def changeset(vote, attrs) do
     vote
-    |> cast(attrs, [])
+    |> cast(attrs, [:remote_ip_address])
     |> validate_required([])
   end
 end

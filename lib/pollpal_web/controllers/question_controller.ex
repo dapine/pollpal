@@ -78,7 +78,15 @@ defmodule PollpalWeb.QuestionController do
         "id_question" => id_question,
         "question_option_index" => question_option_index
       }) do
-    with {:ok, %Vote{} = vote} <- Polls.create_vote(id_question, question_option_index) do
+    remote_ip =
+      conn.remote_ip
+      |> Tuple.to_list()
+      |> Enum.join(".")
+
+    with {:ok, %Vote{} = vote} <-
+           Polls.create_vote(id_question, question_option_index, %{
+             remote_ip_address: remote_ip
+           }) do
       conn
       |> put_status(:created)
       |> render("vote.json", vote: vote)

@@ -60,11 +60,12 @@ defmodule Pollpal.Polls do
 
   def get_question_option!(id), do: Repo.get!(QuestionOption, id)
 
-  def create_vote(id_question, question_option_index) do
+  def create_vote(id_question, question_option_index, attrs \\ %{}) do
     question = get_question!(id_question)
     question_option = get_question_option(question.id, question_option_index)
 
     %Vote{question_id: question.id, question_option_id: question_option.id}
+    |> Vote.changeset(attrs)
     |> Repo.insert()
   end
 
