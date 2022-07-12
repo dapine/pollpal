@@ -8,6 +8,8 @@ defmodule Pollpal.Polls.QuestionOption do
 
     belongs_to :question, Pollpal.Polls.Question
 
+    has_many :votes, Pollpal.Polls.Vote
+
     timestamps()
   end
 

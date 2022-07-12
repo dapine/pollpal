@@ -91,6 +91,7 @@ defmodule PollpalWeb.QuestionController do
     remote_ip = ip_as_string(conn.remote_ip)
     question = Polls.get_question!(id_question)
     has_voted = has_voted?(id_question, remote_ip)
+    question_option = Polls.get_question_option(question.id, question_option_index)
 
     case {question.ip_duplication_check, has_voted} do
       {true, true} ->
@@ -98,7 +99,7 @@ defmodule PollpalWeb.QuestionController do
 
       _ ->
         with {:ok, %Vote{} = vote} <-
-               Polls.create_vote(id_question, question_option_index, %{
+               Polls.create_vote(question, question_option, %{
                  remote_ip_address: remote_ip
                }) do
           conn

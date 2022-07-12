@@ -10,6 +10,8 @@ defmodule Pollpal.Polls.Question do
 
     has_many :question_options, Pollpal.Polls.QuestionOption
 
+    has_many :votes, Pollpal.Polls.Vote
+
     timestamps()
   end
 

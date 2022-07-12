@@ -3,12 +3,10 @@ defmodule Pollpal.Polls.Vote do
   import Ecto.Changeset
 
   schema "votes" do
-    field :question_id, :id
-    field :question_option_id, :id
     field :remote_ip_address, :string
 
-    belongs_to :questions, Pollpal.Polls.Question, primary_key: true
-    belongs_to :question_options, Pollpal.Polls.QuestionOption, primary_key: true
+    belongs_to :question, Pollpal.Polls.Question
+    belongs_to :question_option, Pollpal.Polls.QuestionOption
 
     timestamps()
   end
@@ -17,6 +15,6 @@ defmodule Pollpal.Polls.Vote do
   def changeset(vote, attrs) do
     vote
     |> cast(attrs, [:remote_ip_address])
-    |> validate_required([])
+    |> validate_required([:remote_ip_address])
   end
 end

@@ -12,12 +12,12 @@ defmodule Pollpal.Polls do
 
   @doc """
   Returns the list of questions.
-
+  
   ## Examples
-
+  
       iex> list_questions()
       [%Question{}, ...]
-
+  
   """
   def list_questions do
     Repo.all(Question)
@@ -25,17 +25,17 @@ defmodule Pollpal.Polls do
 
   @doc """
   Gets a single question.
-
+  
   Raises `Ecto.NoResultsError` if the Question does not exist.
-
+  
   ## Examples
-
+  
       iex> get_question!(123)
       %Question{}
-
+  
       iex> get_question!(456)
       ** (Ecto.NoResultsError)
-
+  
   """
   def get_question!(id), do: Repo.get!(Question, id)
 
@@ -60,11 +60,8 @@ defmodule Pollpal.Polls do
 
   def get_question_option!(id), do: Repo.get!(QuestionOption, id)
 
-  def create_vote(id_question, question_option_index, attrs \\ %{}) do
-    question = get_question!(id_question)
-    question_option = get_question_option(question.id, question_option_index)
-
-    %Vote{question_id: question.id, question_option_id: question_option.id}
+  def create_vote(question, question_option, attrs \\ %{}) do
+    %Vote{question: question, question_option: question_option}
     |> Vote.changeset(attrs)
     |> Repo.insert()
   end
@@ -80,15 +77,15 @@ defmodule Pollpal.Polls do
 
   @doc """
   Creates a question.
-
+  
   ## Examples
-
+  
       iex> create_question(%{field: value})
       {:ok, %Question{}}
-
+  
       iex> create_question(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
-
+  
   """
   def create_question(attrs \\ %{}) do
     %Question{}
@@ -98,15 +95,15 @@ defmodule Pollpal.Polls do
 
   @doc """
   Updates a question.
-
+  
   ## Examples
-
+  
       iex> update_question(question, %{field: new_value})
       {:ok, %Question{}}
-
+  
       iex> update_question(question, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
-
+  
   """
   def update_question(%Question{} = question, attrs) do
     question
@@ -116,15 +113,15 @@ defmodule Pollpal.Polls do
 
   @doc """
   Deletes a question.
-
+  
   ## Examples
-
+  
       iex> delete_question(question)
       {:ok, %Question{}}
-
+  
       iex> delete_question(question)
       {:error, %Ecto.Changeset{}}
-
+  
   """
   def delete_question(%Question{} = question) do
     Repo.delete(question)
@@ -132,12 +129,12 @@ defmodule Pollpal.Polls do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking question changes.
-
+  
   ## Examples
-
+  
       iex> change_question(question)
       %Ecto.Changeset{data: %Question{}}
-
+  
   """
   def change_question(%Question{} = question, attrs \\ %{}) do
     Question.changeset(question, attrs)
