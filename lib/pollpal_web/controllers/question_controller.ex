@@ -108,4 +108,10 @@ defmodule PollpalWeb.QuestionController do
         end
     end
   end
+
+  def results(conn, %{"id" => id}) do
+    question = Polls.get_question!(id)
+    result = Polls.results(id)
+    render(conn, "results.json", %{question: question, votes: result})
+  end
 end

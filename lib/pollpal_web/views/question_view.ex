@@ -20,6 +20,13 @@ defmodule PollpalWeb.QuestionView do
     }
   end
 
+  def render("question_basic.json", %{question: question}) do
+    %{
+      title: question.title,
+      description: question.description
+    }
+  end
+
   def render("question_options.json", %{question_options: question_options}) do
     %{data: Enum.map(question_options, fn qo -> %{value: qo.value, index: qo.index} end)}
   end
@@ -38,6 +45,15 @@ defmodule PollpalWeb.QuestionView do
       data: %{
         question: vote.question_id,
         question_option: vote.question_option_id
+      }
+    }
+  end
+
+  def render("results.json", %{question: question, votes: votes}) do
+    %{
+      data: %{
+        question: render_one(question, QuestionView, "question_basic.json"),
+        results: Enum.map(votes, fn {num, option} -> %{numberOfVotes: num, option: option} end)
       }
     }
   end

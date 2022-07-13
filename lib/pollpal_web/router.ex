@@ -18,6 +18,7 @@ defmodule PollpalWeb.Router do
 
     get "/question_options/:id", QuestionController, :show_question_option
     post "/questions/:id_question/vote/:question_option_index", QuestionController, :vote
+    get "/questions/:id/results", QuestionController, :results
   end
 
   if Mix.env() in [:dev, :test] do

@@ -75,6 +75,20 @@ defmodule Pollpal.Polls do
     Repo.all(query)
   end
 
+  def results(question_id) do
+    query =
+      from v in Vote,
+        join: q in Question,
+        on: q.id == v.question_id,
+        join: qo in QuestionOption,
+        on: qo.id == v.question_option_id,
+        where: q.id == ^question_id,
+        select: {count(v.id), qo.value},
+        group_by: [v.question_option_id, qo.value]
+
+    Repo.all(query)
+  end
+
   @doc """
   Creates a question.
   
